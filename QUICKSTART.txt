@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Quick Start Script - Run each service in separate terminals
+
+cat << 'EOF'
+========================================
+SynapseModel - Quick Start Guide
+========================================
+
+✅ Infrastructure Running:
+  - MongoDB: localhost:27017
+  - Redis: localhost:6379
+
+✅ Smart Contracts Deployed (Testnet):
+  - Package: 0x870b6a8a841e69a56795877ae9461ba715a4100f6e1a218ff9734c7bf8732e9f
+  - Job Registry: 0xba83e185b6e2c164294aeeb12ea74cdb5d7387192f96fb8ba13d07ad152a0411
+
+========================================
+Manual Steps - Run in Separate Terminals
+========================================
+
+📌 TERMINAL 1 - TEE Server:
+cd tee-server
+cargo build --release  # First time only (takes 5-10 min)
+cargo run --release
+
+📌 TERMINAL 2 - Backend:
+cd backend
+pnpm install  # First time only
+pnpm run dev
+
+📌 TERMINAL 3 - Frontend:
+cd frontend
+pnpm install  # First time only
+PORT=3001 pnpm run dev
+
+========================================
+Testing
+========================================
+
+After all services start:
+
+1. TEE Server: curl http://localhost:3000/health_check
+2. Backend API: curl http://localhost:4000/api/v1/health
+3. Frontend: Open http://localhost:3001 in browser
+
+========================================
+Full Documentation
+========================================
+
+See DEPLOYMENT.md for:
+- Complete setup instructions
+- Enclave registration steps
+- End-to-end testing guide
+- Troubleshooting tips
+
+EOF
