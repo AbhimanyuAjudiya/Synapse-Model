@@ -1,0 +1,39 @@
+# Enclave Configuration
+# This file contains configuration for the TEE enclave
+
+enclave:
+  name: "synapsemodel"
+  version: "1.0.0"
+  
+  # Expected PCR values (Platform Configuration Registers)
+  # These are cryptographic measurements of the enclave boot process
+  # Update these after building your enclave image
+  pcrs:
+    pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    pcr1: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    pcr2: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+
+  # Resource limits
+  resources:
+    memory_mib: 2048
+    cpus: 2
+
+  # Logging configuration
+  logging:
+    level: "info"
+    format: "json"
+
+# Application configuration
+app:
+  # Models directory
+  models_dir: "/app/models"
+  
+  # Server configuration
+  server:
+    host: "0.0.0.0"
+    port: 3000
+    
+  # Security
+  security:
+    enable_attestation: false  # Set to true in production
+    require_tls: false  # Set to true in production
