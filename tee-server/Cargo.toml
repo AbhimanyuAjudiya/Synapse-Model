@@ -1,0 +1,62 @@
+[package]
+name = "synapsemodel-tee-server"
+version = "1.0.0"
+edition = "2021"
+authors = ["AbhimanyuAjudiya"]
+license = "MIT"
+
+[dependencies]
+# Web framework
+axum = { version = "0.7", features = ["json", "macros"] }
+tokio = { version = "1.35", features = ["full"] }
+tower = { version = "0.4", features = ["util"] }
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Cryptography
+fastcrypto = { git = "https://github.com/MystenLabs/fastcrypto", branch = "main" }
+rand = "0.8"
+ed25519-dalek = "2.1"
+sha2 = "0.10"
+hex = "0.4"
+
+# BCS serialization (matching Sui)
+bcs = "0.1"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Machine Learning (optional - disabled for quick start)
+# ort = { version = "1.16", features = ["half"] }
+
+# HTTP client
+reqwest = { version = "0.11", features = ["json"] }
+
+# Environment
+dotenv = "0.15"
+
+# Attestation (conditional for Nitro)
+[target.'cfg(target_os = "linux")'.dependencies]
+nix = { version = "0.27", features = ["socket"] }
+vsock = "0.3"
+
+[dev-dependencies]
+test-log = "0.2"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
