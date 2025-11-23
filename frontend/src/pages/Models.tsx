@@ -57,28 +57,8 @@ export default function Models() {
   const modelsPerPage = 9
 
   // Use blockchain models if available, fallback to mock data for demo
-  console.log("🔍 Blockchain models check:", {
-    blockchainModels: blockchainModels,
-    blockchainLength: blockchainModels.length,
-    blockchainModelsType: typeof blockchainModels,
-    isArray: Array.isArray(blockchainModels),
-    loading: loading,
-    error: error
-  })
-  
-  // Only use mock data if we're not loading and there are no blockchain models
   const allModels = (!loading && blockchainModels.length === 0) ? mockModels : blockchainModels
   
-  console.log("🔍 Final allModels decision:", {
-    isLoading: loading,
-    hasBlockchainModels: blockchainModels.length > 0,
-    usingMockData: !loading && blockchainModels.length === 0,
-    finalCount: allModels.length,
-    finalModels: allModels.map(m => ({ id: m.id, name: m.name, blobId: m.blobId }))
-  })
-  
-  console.log("blockchainModels", blockchainModels)
-  console.log("allModels with blobId check:", allModels.map(m => ({ id: m.id, name: m.name, blobId: m.blobId, objectId: m.objectId, uploader: m.uploader })))
   // Get all unique tags
   const allTags = useMemo(() => {
     const tags = new Set<string>()
@@ -88,16 +68,6 @@ export default function Models() {
 
   // Filter and sort models
   const filteredModels = useMemo(() => {
-    console.log("🔍 Starting filteredModels processing with allModels:", allModels.length)
-    console.log("🔍 Raw allModels blobId check:", allModels.map(m => ({ 
-      id: m.id, 
-      name: m.name, 
-      blobId: m.blobId, 
-      hasBlobId: !!m.blobId,
-      objectId: m.objectId, 
-      uploader: m.uploader 
-    })))
-    
     const filtered = allModels.filter((model) => {
       const matchesSearch =
         model.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -109,15 +79,6 @@ export default function Models() {
 
       return matchesSearch && matchesType && matchesTag
     })
-    
-    console.log("🔍 After filtering - filtered models blobId check:", filtered.map(m => ({ 
-      id: m.id, 
-      name: m.name, 
-      blobId: m.blobId, 
-      hasBlobId: !!m.blobId,
-      objectId: m.objectId, 
-      uploader: m.uploader 
-    })))
 
     // Sort models
     filtered.sort((a, b) => {
@@ -141,49 +102,12 @@ export default function Models() {
       }
     })
 
-    console.log("🔍 After sorting - final filtered models blobId check:", filtered.map(m => ({ 
-      id: m.id, 
-      name: m.name, 
-      blobId: m.blobId, 
-      hasBlobId: !!m.blobId,
-      objectId: m.objectId, 
-      uploader: m.uploader 
-    })))
-
     return filtered
   }, [allModels, searchQuery, selectedType, selectedTag, sortBy])
-
-  // Debug: Check if blockchain data is preserved in filtered models
-  console.log("filteredModels with blockchain data:", filteredModels.map(m => ({ 
-    id: m.id, 
-    name: m.name, 
-    blobId: m.blobId, 
-    objectId: m.objectId, 
-    uploader: m.uploader 
-  })))
 
   // Pagination
   const totalPages = Math.ceil(filteredModels.length / modelsPerPage)
   const paginatedModels = filteredModels.slice((currentPage - 1) * modelsPerPage, currentPage * modelsPerPage)
-  
-  // Debug: Check if blockchain data is preserved in paginated models
-  console.log("🔍 paginatedModels with blockchain data:", paginatedModels.map(m => ({ 
-    id: m.id, 
-    name: m.name, 
-    blobId: m.blobId, 
-    hasBlobId: !!m.blobId,
-    objectId: m.objectId, 
-    uploader: m.uploader 
-  })))
-  
-  // Debug: Check if blockchain data is preserved in paginated models
-  console.log("paginatedModels with blockchain data:", paginatedModels.map(m => ({ 
-    id: m.id, 
-    name: m.name, 
-    blobId: m.blobId, 
-    objectId: m.objectId, 
-    uploader: m.uploader 
-  })))
 
   const clearFilters = () => {
     setSearchQuery("")

@@ -10,8 +10,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { FileDropzone } from "@/components/FileDropzone"
-import { registerModelOnChain } from "@/lib/modelRegistryClient"
-import { useWallet } from "@/hooks/useWallet"
+import { registerModelOnChain, modelExists } from "@/lib/suiClient"
+import { useSuiWallet } from "@/hooks/useSuiWallet"
 
 interface UploadFormData {
   name: string
@@ -39,7 +39,16 @@ interface WalrusUploadResult {
 }
 
 export function UploadForm() {
-  const { address, isConnected } = useWallet()
+  const { address, isConnected, packageId, registryObjectId, signAndExecuteTransaction } = useSuiWallet()
+  
+  // Testnet contract addresses (hardcoded fallback)
+  const PACKAGE_ID = "0x4d6b5e031d2eab0ea39ad6fb78bd3b30a24722b9d8c26fc2f0388a08aad39403"
+  const REGISTRY_ID = "0x9dfc7009ec4b3c1ea6830f5333c150869a784295fdf49486e2e01edc5a3088dc"
+  
+  // Use hardcoded values if network config returns 0x0
+  const actualPackageId = (packageId && packageId !== "0x0") ? packageId : PACKAGE_ID
+  const actualRegistryId = (registryObjectId && registryObjectId !== "0x0") ? registryObjectId : REGISTRY_ID
+  
   const [modelFile, setModelFile] = useState<File | null>(null)
   const [uploadSuccess, setUploadSuccess] = useState(false)
   const [transactionHash, setTransactionHash] = useState<string>("")
@@ -223,32 +232,46 @@ export function UploadForm() {
 
     try {
       // Step 1: File already uploaded to Walrus, use the stored result
-      console.log('Using stored Walrus upload result:', walrusUploadResult)
+      // Step 2: Check if model already exists on blockchain
+      const exists = await modelExists(
+        walrusUploadResult.blobId!,
+        actualPackageId,
+        actualRegistryId
+      )
+      
+      if (exists) {
+        throw new Error("This model has already been registered on the blockchain. Please upload a different file or refresh the page to upload again.")
+      }
 
-      // Step 2: Register model on smart contract
+      // Step 3: Register model on smart contract
       setCurrentStep("register")
       setUploadProgress({ progress: 90, stage: "processing" })
       
-      console.log('Registering model on blockchain with data:', {
-        blobId: walrusUploadResult.blobId,
-        objectId: walrusUploadResult.objectId || walrusUploadResult.blobId,
-        name: data.name,
-        description: data.description,
-      })
-      
-      const registrationResult = await registerModelOnChain({
-        blobId: walrusUploadResult.blobId!,
-        objectId: walrusUploadResult.objectId || walrusUploadResult.blobId!,
-        name: data.name,
-        description: data.description,
-      })
+      const registrationResult = await registerModelOnChain(
+        {
+          blobId: walrusUploadResult.blobId!,
+          objectId: walrusUploadResult.objectId || walrusUploadResult.blobId!,
+          name: data.name,
+          description: data.description,
+        },
+        actualPackageId,
+        actualRegistryId,
+        signAndExecuteTransaction
+      )
 
       if (!registrationResult.success) {
-        throw new Error(registrationResult.error || "Failed to register model on blockchain")
+        const errorMsg = registrationResult.error || "Failed to register model on Sui blockchain"
+        
+        // Check if it's a duplicate blob ID error
+        if (errorMsg.includes("EBlobIdAlreadyExists") || errorMsg.includes("error code: 2")) {
+          throw new Error("This model has already been registered on the blockchain. Please upload a different file.")
+        }
+        
+        throw new Error(errorMsg)
       }
 
-      console.log('✅ Model registered successfully on blockchain!')
-      console.log('Transaction hash:', registrationResult.transactionHash)
+      console.log('✅ Model registered successfully on Sui blockchain!')
+      console.log('Transaction digest:', registrationResult.transactionHash)
       setTransactionHash(registrationResult.transactionHash)
 
       // Step 3: Complete
@@ -278,11 +301,11 @@ export function UploadForm() {
         <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
         <h2 className="text-2xl font-bold mb-2">Model Published Successfully!</h2>
         <p className="text-muted-foreground mb-4">
-          Your AI model has been uploaded to Walrus and registered on the blockchain.
+          Your AI model has been uploaded to Walrus and registered on the Sui blockchain.
         </p>
         {transactionHash && (
           <div className="mb-4 p-3 bg-muted rounded-lg">
-            <p className="text-sm font-medium mb-1">Transaction Hash:</p>
+            <p className="text-sm font-medium mb-1">Transaction Digest:</p>
             <code className="text-xs break-all bg-background px-2 py-1 rounded">
               {transactionHash}
             </code>
@@ -299,7 +322,7 @@ export function UploadForm() {
         case "upload":
           return "Uploading model file to Walrus storage..."
         case "register":
-          return "Registering model on blockchain..."
+          return "Registering model on Sui blockchain..."
         case "complete":
           return "Upload complete!"
         default:

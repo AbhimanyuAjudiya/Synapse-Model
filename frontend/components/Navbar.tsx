@@ -3,17 +3,17 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { Menu, X, Wallet, AlertTriangle } from "lucide-react"
+import { Menu, X, Wallet } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { WalletModal } from "@/components/WalletModal"
-import { useWallet } from "@/hooks/useWallet"
+import { useSuiWallet } from "@/hooks/useSuiWallet"
+import { ConnectButton } from "@mysten/dapp-kit"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [showWalletModal, setShowWalletModal] = useState(false)
 
-  const { isConnected, isOnSupportedChain, formatAddress, currentChainName } = useWallet()
+  const { isConnected, formatAddress } = useSuiWallet()
 
   const navItems = [
     { href: "/upload", label: "Upload" },
@@ -55,22 +55,7 @@ export function Navbar() {
 
               {/* Wallet Connection */}
               <div className="flex items-center space-x-2">
-                {isConnected && !isOnSupportedChain && (
-                  <Badge variant="destructive" className="flex items-center space-x-1">
-                    <AlertTriangle className="w-3 h-3" />
-                    <span className="text-xs">Wrong Network</span>
-                  </Badge>
-                )}
-
-                <Button
-                  variant={isConnected ? "secondary" : "default"}
-                  size="sm"
-                  className="flex items-center space-x-2"
-                  onClick={handleWalletClick}
-                >
-                  <Wallet className="w-4 h-4" />
-                  <span>{isConnected ? formatAddress() : "Connect Wallet"}</span>
-                </Button>
+                <ConnectButton />
               </div>
             </div>
 
@@ -103,22 +88,7 @@ export function Navbar() {
                 ))}
 
                 <div className="flex flex-col space-y-2">
-                  {isConnected && !isOnSupportedChain && (
-                    <Badge variant="destructive" className="flex items-center space-x-1 w-fit">
-                      <AlertTriangle className="w-3 h-3" />
-                      <span className="text-xs">Wrong Network</span>
-                    </Badge>
-                  )}
-
-                  <Button
-                    variant={isConnected ? "secondary" : "default"}
-                    size="sm"
-                    className="flex items-center space-x-2 w-fit"
-                    onClick={handleWalletClick}
-                  >
-                    <Wallet className="w-4 h-4" />
-                    <span>{isConnected ? formatAddress() : "Connect Wallet"}</span>
-                  </Button>
+                  <ConnectButton />
                 </div>
               </div>
             </motion.div>

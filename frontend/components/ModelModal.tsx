@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { SliderHours } from "@/components/SliderHours"
-import { PaymentFlow } from "@/components/PaymentFlow"
 import type { ModelManifest } from "@/types/model"
 
 interface ModelModalProps {
@@ -278,17 +277,6 @@ export function ModelModal({ model, isOpen, onClose }: ModelModalProps) {
               </div>
             </div>
           </motion.div>
-
-          {/* Payment Flow Modal */}
-          {showPayment && model.pricing?.mode === "hourly" && (
-            <PaymentFlow
-              model={model}
-              hours={hours}
-              totalCost={calculateTotalCost()}
-              onSuccess={handlePaymentSuccess}
-              onCancel={() => setShowPayment(false)}
-            />
-          )}
         </div>
       )}
     </AnimatePresence>
