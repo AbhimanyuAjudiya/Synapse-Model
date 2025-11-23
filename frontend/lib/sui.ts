@@ -7,9 +7,9 @@ const { networkConfig, useNetworkVariable, useNetworkVariables } = createNetwork
     url: getFullnodeUrl("testnet"),
     variables: {
       // Replace with your deployed package ID after deployment
-      modelRegistryPackageId: "0x4d6b5e031d2eab0ea39ad6fb78bd3b30a24722b9d8c26fc2f0388a08aad39403",
+      modelRegistryPackageId: "0x0ad1816684996d1e44fce381f0b0f5f9d09223c70c29a0111e8f77cf5cf59bb2",
       // Replace with your ModelRegistry shared object ID
-      modelRegistryObjectId: "0x9dfc7009ec4b3c1ea6830f5333c150869a784295fdf49486e2e01edc5a3088dc",
+      modelRegistryObjectId: "0xce6abe2a425d06478dcf685faf827260ec7888041c63c2f107672007de7bfd0f",
     },
   },
   mainnet: {

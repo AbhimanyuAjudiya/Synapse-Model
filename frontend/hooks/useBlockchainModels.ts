@@ -10,8 +10,8 @@ export function useBlockchainModels() {
   const { packageId, registryObjectId } = useSuiWallet()
   
   // Hardcoded testnet values as fallback
-  const TESTNET_PACKAGE_ID = "0x4d6b5e031d2eab0ea39ad6fb78bd3b30a24722b9d8c26fc2f0388a08aad39403"
-  const TESTNET_REGISTRY_ID = "0x9dfc7009ec4b3c1ea6830f5333c150869a784295fdf49486e2e01edc5a3088dc"
+  const TESTNET_PACKAGE_ID = "0x0ad1816684996d1e44fce381f0b0f5f9d09223c70c29a0111e8f77cf5cf59bb2"
+  const TESTNET_REGISTRY_ID = "0xce6abe2a425d06478dcf685faf827260ec7888041c63c2f107672007de7bfd0f"
   
   const actualPackageId = (packageId && packageId !== "0x0") ? packageId : TESTNET_PACKAGE_ID
   const actualRegistryId = (registryObjectId && registryObjectId !== "0x0") ? registryObjectId : TESTNET_REGISTRY_ID

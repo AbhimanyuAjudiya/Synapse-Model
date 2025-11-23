@@ -242,15 +242,15 @@ export default function Models() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   onClick={() => {
-                    console.log("🎯 Setting selected model:", {
-                      id: model.id,
-                      name: model.name,
-                      blobId: model.blobId,
-                      hasBlobId: !!model.blobId,
-                      objectId: model.objectId,
-                      uploader: model.uploader,
-                      fullModel: model
-                    })
+                    // console.log("🎯 Setting selected model:", {
+                    //   id: model.id,
+                    //   name: model.name,
+                    //   blobId: model.blobId,
+                    //   hasBlobId: !!model.blobId,
+                    //   objectId: model.objectId,
+                    //   uploader: model.uploader,
+                    //   fullModel: model
+                    // })
                     setSelectedModel(model)
                   }}
                   className="cursor-pointer"

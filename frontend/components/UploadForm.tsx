@@ -42,8 +42,8 @@ export function UploadForm() {
   const { address, isConnected, packageId, registryObjectId, signAndExecuteTransaction } = useSuiWallet()
   
   // Testnet contract addresses (hardcoded fallback)
-  const PACKAGE_ID = "0x4d6b5e031d2eab0ea39ad6fb78bd3b30a24722b9d8c26fc2f0388a08aad39403"
-  const REGISTRY_ID = "0x9dfc7009ec4b3c1ea6830f5333c150869a784295fdf49486e2e01edc5a3088dc"
+  const PACKAGE_ID = "0x0ad1816684996d1e44fce381f0b0f5f9d09223c70c29a0111e8f77cf5cf59bb2"
+  const REGISTRY_ID = "0xce6abe2a425d06478dcf685faf827260ec7888041c63c2f107672007de7bfd0f"
   
   // Use hardcoded values if network config returns 0x0
   const actualPackageId = (packageId && packageId !== "0x0") ? packageId : PACKAGE_ID
@@ -94,9 +94,9 @@ export function UploadForm() {
       throw new Error("Empty file selected")
     }
 
-    console.log(
-      `📁 Uploading file - Size: ${file.size} bytes, Type: ${file.type}`
-    )
+    // console.log(
+    //   `📁 Uploading file - Size: ${file.size} bytes, Type: ${file.type}`
+    // )
 
     const walrusResponse = await fetch(
       `${WALRUS_PUBLISHER}/v1/blobs?epochs=3&deletable=true`,
@@ -109,7 +109,7 @@ export function UploadForm() {
       }
     )
 
-    console.log(`📡 Walrus response status: ${walrusResponse.status}`)
+    // console.log(`📡 Walrus response status: ${walrusResponse.status}`)
 
     if (!walrusResponse.ok) {
       const errorText = await walrusResponse.text()
@@ -119,7 +119,7 @@ export function UploadForm() {
     }
 
     const walrusResult = await walrusResponse.json()
-    console.log("✅ Walrus upload successful!", walrusResult)
+    // console.log("✅ Walrus upload successful!", walrusResult)
 
     let responseData: WalrusUploadResult = {
       success: true,
@@ -171,13 +171,13 @@ export function UploadForm() {
     setWalrusUploadResult(null)
 
     try {
-      console.log('Starting file upload to Walrus...')
+      // console.log('Starting file upload to Walrus...')
       setUploadProgress({ progress: 5, stage: "preparing" })
       
       setUploadProgress({ progress: 50, stage: "uploading" })
       const uploadResult = await uploadToWalrus(file)
       
-      console.log('Full Walrus upload result:', uploadResult)
+      // console.log('Full Walrus upload result:', uploadResult)
       setWalrusUploadResult(uploadResult)
       setIsFileUploaded(true)
       setUploadProgress(null)
@@ -270,8 +270,8 @@ export function UploadForm() {
         throw new Error(errorMsg)
       }
 
-      console.log('✅ Model registered successfully on Sui blockchain!')
-      console.log('Transaction digest:', registrationResult.transactionHash)
+      // console.log('✅ Model registered successfully on Sui blockchain!')
+      // console.log('Transaction digest:', registrationResult.transactionHash)
       setTransactionHash(registrationResult.transactionHash)
 
       // Step 3: Complete

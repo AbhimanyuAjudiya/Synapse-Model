@@ -23,13 +23,13 @@ export function ModelModal({ model, isOpen, onClose }: ModelModalProps) {
   const [showPayment, setShowPayment] = useState(false)
 
   // Debug: Log the model data to see what we're receiving
-  console.log("🔍 ModelModal received model:", {
-    id: model.id,
-    name: model.name,
-    blobId: model.blobId,
-    objectId: model.objectId,
-    uploader: model.uploader
-  })
+  // console.log("🔍 ModelModal received model:", {
+  //   id: model.id,
+  //   name: model.name,
+  //   blobId: model.blobId,
+  //   objectId: model.objectId,
+  //   uploader: model.uploader
+  // })
 
   const getTypeIcon = (type: string) => {
     switch (type) {

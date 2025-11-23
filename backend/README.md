@@ -19,7 +19,7 @@ FastAPI application for managing AWS EC2 instances with Walrus blob storage inte
 Create new EC2 instance and fetch Walrus blob (synchronous - waits for completion)
 ```json
 {
-  "blob_id": "your-walrus-blob-id"
+  "blob_id": "your-walrus-object-id"
 }
 ```
 Returns: Complete instance details after setup is done, including `instance_id`, `public_ip`, and `status`
@@ -90,7 +90,7 @@ The server will start on `http://localhost:8000` with automatic reload enabled.
 ```bash
 curl -X POST http://localhost:8000/api/instances \
   -H "Content-Type: application/json" \
-  -d '{"blob_id": "your-blob-id-here"}'
+  -d '{"blob_id": "your-object-id-here"}'
 ```
 
 ### Get All Instances
