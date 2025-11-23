@@ -1,371 +1,122 @@
-# SynapseModel Backend
+# AWS EC2 + Walrus Manager
 
-Backend API for SynapseModel - Verifiable AI Inference on Sui blockchain.
+# Python version 3.11
+FastAPI application for managing AWS EC2 instances with Walrus blob storage integration.
 
 ## Features
 
-- **Job Management**: Submit, track, and manage ML inference jobs
-- **TEE Integration**: Communicate with Trusted Execution Environment servers
-- **Blockchain Verification**: Build and manage on-chain verification transactions
-- **Queue Processing**: Asynchronous job processing with BullMQ
-- **RESTful API**: Clean REST API with Express.js
-- **Type Safety**: Full TypeScript implementation
-- **Monitoring**: Health checks and metrics endpoints
+- ✅ **Create EC2 Instance**: Spin up EC2 instances from custom AMI template
+- ✅ **Fetch Walrus Blobs**: Automatically SSH and download blobs from Walrus network
+- ✅ **Delete Instances**: Terminate EC2 instances
+- ✅ **List All Instances**: View all managed instances
+- ✅ **Get Instance Details**: Detailed information about specific instances
 
-## Prerequisites
+## API Endpoints
 
-- Node.js >= 18.0.0
-- MongoDB >= 6.0
-- Redis >= 6.0
-- Running TEE server (Nautilus enclave)
+### POST `/api/instances`
+Create new EC2 instance and fetch Walrus blob
+```json
+{
+  "blob_id": "your-walrus-blob-id"
+}
+```
+Returns: `instance_id` immediately (processing happens in background)
 
-## Installation
+### DELETE `/api/instances/{instance_id}`
+Terminate EC2 instance
 
+### GET `/api/instances`
+Get all managed instances with their status
+
+### GET `/api/instances/{instance_id}`
+Get detailed information about a specific instance
+
+### GET `/`
+Health check endpoint
+
+## Setup
+
+1. **Install dependencies**:
 ```bash
-# Install dependencies
-npm install
+pip install -r requirements.txt
+```
 
-# Copy environment file
+2. **Configure environment variables**:
+```bash
 cp .env.example .env
-
-# Edit .env with your configuration
-nano .env
 ```
 
-## Configuration
+Edit `.env` with your AWS credentials and configuration:
+- `AWS_REGION`: AWS region (default: us-east-1)
+- `AWS_ACCESS_KEY_ID`: Your AWS access key
+- `AWS_SECRET_ACCESS_KEY`: Your AWS secret key
+- `AWS_AMI_ID`: **Your custom AMI template ID (must have SSM agent installed)**
+- `AWS_INSTANCE_TYPE`: Instance type (default: t2.medium)
+- `AWS_SECURITY_GROUP_ID`: Security group ID
+- `AWS_SUBNET_ID`: Optional subnet ID
 
-Required environment variables:
+3. **IAM Requirements**:
+- Create IAM role `SSMManagedInstanceCore` with `AmazonSSMManagedInstanceCore` policy
+- Attach this role to your EC2 instances for SSM access
 
+4. **Run the application**:
 ```bash
-# Database
-MONGODB_URI=mongodb://localhost:27017/synapsemodel
-
-# Redis
-REDIS_HOST=localhost
-REDIS_PORT=6379
-
-# Sui Network
-SUI_NETWORK=testnet
-SUI_PACKAGE_ID=0x...
-SUI_ENCLAVE_CONFIG_ID=0x...
-SUI_ENCLAVE_ID=0x...
-
-# TEE Server
-TEE_SERVER_URL=http://localhost:3000
+python main.py
+# or
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-## Development
+## Example Usage
 
+### Create Instance
 ```bash
-# Run in development mode with auto-reload
-npm run dev
-
-# Run worker separately
-npm run worker
-
-# Build for production
-npm run build
-
-# Run production build
-npm start
+curl -X POST http://localhost:8000/api/instances \
+  -H "Content-Type: application/json" \
+  -d '{"blob_id": "your-blob-id-here"}'
 ```
 
-## API Endpoints
+### Get All Instances
+```bash
+curl http://localhost:8000/api/instances
+```
 
-### Health & Monitoring
+### Get Instance Details
+```bash
+curl http://localhost:8000/api/instances/i-1234567890abcdef0
+```
 
-- `GET /api/health` - Basic health check
-- `GET /api/health/detailed` - Detailed health with dependencies
-- `GET /api/metrics` - System metrics
+### Delete Instance
+```bash
+curl -X DELETE http://localhost:8000/api/instances/i-1234567890abcdef0
+```
 
-### Jobs
+## Instance Status Flow
 
-- `POST /api/jobs` - Submit new job
-- `GET /api/jobs` - List jobs
-- `GET /api/jobs/:id` - Get job details
-- `POST /api/jobs/:id/process` - Manually process job
-- `DELETE /api/jobs/:id` - Cancel job
-- `GET /api/jobs/stats` - Get job statistics
+1. `creating` - EC2 instance is being launched
+2. `waiting_for_instance` - Waiting for instance to be running
+3. `waiting_for_ssm` - Waiting for SSM agent to be ready
+4. `fetching_blob` - Downloading blob from Walrus via SSM
+5. `ready` - Instance ready with blob downloaded
+6. `failed` - Something went wrong (check error field)
 
-### Verification
+## Requirements
 
-- `POST /api/verification/verify` - Verify job on-chain
-- `POST /api/verification/update` - Update verification status
-- `GET /api/verification/status/:jobId` - Get verification status
-- `GET /api/verification/transaction/:txHash` - Get transaction details
-
-## Job Flow
-
-1. **Submit Job**: Client submits inference request
-2. **Queue Job**: Job added to Redis queue
-3. **Process Job**: Worker picks up job and sends to TEE
-4. **TEE Processing**: Enclave performs inference and signs result
-5. **Store Result**: Result and signature stored in database
-6. **Verification**: Client can verify result on-chain
-7. **Certificate**: Trust certificate issued on Sui blockchain
+- Python 3.8+
+- AWS Account with EC2 and SSM permissions
+- IAM role `SSMManagedInstanceCore` 
+- Custom AMI ID with SSM agent pre-installed
+- Security Group configured
 
 ## Architecture
 
-```
-┌─────────────┐
-│   Client    │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐     ┌──────────┐
-│  Express    │────▶│  Redis   │
-│   API       │     │  Queue   │
-└──────┬──────┘     └────┬─────┘
-       │                 │
-       ▼                 ▼
-┌─────────────┐     ┌──────────┐
-│  MongoDB    │     │  Worker  │
-│  Storage    │     │ Process  │
-└─────────────┘     └────┬─────┘
-                         │
-                         ▼
-                    ┌──────────┐
-                    │   TEE    │
-                    │  Server  │
-                    └────┬─────┘
-                         │
-                         ▼
-                    ┌──────────┐
-                    │   Sui    │
-                    │Blockchain│
-                    └──────────┘
-```
+- **FastAPI**: Modern Python web framework
+- **Boto3**: AWS SDK for Python
+- **AWS SSM**: Systems Manager for remote command execution
+- **Asyncio**: Non-blocking background processing
 
-## Testing
+## Notes
 
-```bash
-# Run tests
-npm test
-
-# Run with coverage
-npm run test:coverage
-```
-
-## Deployment
-
-### Docker
-
-```bash
-# Build image
-docker build -t synapsemodel-backend .
-
-# Run container
-docker run -p 4000:4000 \
-  -e MONGODB_URI=mongodb://host:27017/synapsemodel \
-  -e REDIS_HOST=host \
-  synapsemodel-backend
-```
-
-### Production Checklist
-
-- [ ] Set `NODE_ENV=production`
-- [ ] Configure production MongoDB
-- [ ] Configure production Redis
-- [ ] Set strong `API_KEY`
-- [ ] Enable rate limiting
-- [ ] Set up monitoring (Prometheus/Grafana)
-- [ ] Configure log aggregation
-- [ ] Set up backup strategy
-- [ ] Enable HTTPS
-- [ ] Configure firewall rules
-
-## Monitoring
-
-Metrics available at `/api/metrics`:
-
-- Queue metrics (waiting, active, completed, failed jobs)
-- System metrics (memory, CPU, uptime)
-
-Health check at `/api/health/detailed`:
-
-- Database connectivity
-- Redis connectivity
-- TEE server status
-- Queue status
-
-## Troubleshooting
-
-### Database Connection Issues
-
-```bash
-# Check MongoDB is running
-systemctl status mongod
-
-# Test connection
-mongo mongodb://localhost:27017/synapsemodel
-```
-
-### Redis Connection Issues
-
-```bash
-# Check Redis is running
-systemctl status redis
-
-# Test connection
-redis-cli ping
-```
-
-### TEE Server Unreachable
-
-```bash
-# Check TEE server health
-curl http://localhost:3000/health_check
-
-# Check network connectivity
-telnet localhost 3000
-```
-
-## License
-
-MIT
-
-## Author
-
-Created by AbhimanyuAjudiya
-Date: 2025-11-22
-
-## API Endpoints
-
-### Health
-
-- `GET /api/health` - Basic health check
-- `GET /api/health/detailed` - Detailed health check with service status
-- `GET /api/health/ready` - Readiness probe
-- `GET /api/health/live` - Liveness probe
-
-### Jobs
-
-- `POST /api/jobs` - Submit new inference job
-- `GET /api/jobs/:jobId` - Get job details
-- `GET /api/jobs` - List user jobs (requires API key)
-- `GET /api/jobs/stats` - Get job statistics
-- `POST /api/jobs/:jobId/cancel` - Cancel job (requires API key)
-
-### Verification
-
-- `POST /api/verification` - Create verification record
-- `GET /api/verification/:jobId` - Get verification details
-- `GET /api/verification` - List verifications
-- `GET /api/verification/stats` - Get verification statistics
-
-## Usage Examples
-
-### Submit Job
-
-```bash
-curl -X POST http://localhost:3001/api/jobs \
-  -H "Content-Type: application/json" \
-  -d '{
-    "modelId": "mnist",
-    "inputData": {
-      "image": [0, 0, 0, ...]
-    }
-  }'
-```
-
-### Get Job Status
-
-```bash
-curl http://localhost:3001/api/jobs/{jobId}
-```
-
-### Create Verification
-
-```bash
-curl -X POST http://localhost:3001/api/verification \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jobId": "your-job-id",
-    "txHash": "your-transaction-hash"
-  }'
-```
-
-## Architecture
-
-```
-backend/
-├── src/
-│   ├── config/         # Configuration (DB, Redis, Sui)
-│   ├── controllers/    # Request handlers
-│   ├── middleware/     # Express middleware
-│   ├── models/         # MongoDB schemas
-│   ├── routes/         # API routes
-│   ├── services/       # Business logic
-│   ├── types/          # TypeScript definitions
-│   ├── utils/          # Utility functions
-│   ├── workers/        # Background job processors
-│   ├── index.ts        # API server entry point
-│   └── worker.ts       # Worker entry point
-├── package.json
-└── tsconfig.json
-```
-
-## Job Lifecycle
-
-1. **Submit** - Job created with status `PENDING`
-2. **Queue** - Job added to BullMQ queue
-3. **Process** - Worker picks up job, status → `PROCESSING`
-4. **TEE** - Inference executed in TEE environment
-5. **Complete** - Result stored, status → `COMPLETED`
-6. **Verify** (Optional) - Blockchain verification transaction
-
-## Error Handling
-
-All errors are handled by centralized middleware:
-
-- `ValidationError` - 400 Bad Request
-- `NotFoundError` - 404 Not Found
-- `TEEError` - 502 Bad Gateway
-- `BlockchainError` - 503 Service Unavailable
-- `AppError` - Custom status codes
-
-## Logging
-
-Structured JSON logging with Pino:
-
-```javascript
-logger.info({ jobId, modelId }, 'Processing job');
-logger.error({ error }, 'Job failed');
-```
-
-## Security
-
-- Rate limiting on all endpoints
-- API key authentication for sensitive operations
-- Input validation with express-validator
-- Helmet security headers
-- CORS configuration
-
-## Production Deployment
-
-1. Set `NODE_ENV=production`
-2. Configure MongoDB replica set
-3. Use Redis cluster for high availability
-4. Set up proper CORS origins
-5. Use environment variables for secrets
-6. Enable monitoring and logging
-7. Run API server and worker as separate processes
-
-```bash
-# Production
-npm run build
-npm start  # API server
-npm run worker  # Background worker
-```
-
-## Monitoring
-
-Health endpoints for container orchestration:
-
-- `/api/health/ready` - Readiness probe (DB + Redis ready)
-- `/api/health/live` - Liveness probe (server alive)
-- `/api/health/detailed` - Full service status
-
-## License
-
-MIT
+- Instances are created asynchronously
+- Blob fetching happens automatically after instance is ready
+- Downloaded blobs are stored at `/home/ubuntu/walrus_blob.zip` on EC2
+- Extracted files are in `/home/ubuntu/walrus_data/`
