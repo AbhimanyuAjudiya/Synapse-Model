@@ -93,7 +93,7 @@ export default function About() {
       category: "Blockchain",
       icon: Network,
       technologies: [
-        { name: "Polygon PoS", description: "Main blockchain for smart contracts" },
+        { name: "Sui", description: "Main blockchain for smart contracts" },
       ]
     },
     {

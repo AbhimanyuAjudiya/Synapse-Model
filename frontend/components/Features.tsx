@@ -7,7 +7,7 @@ const features = [
   {
     icon: Shield,
     title: "Decentralized & Secure",
-    description: "Built on Polygon blockchain with Walrus storage for maximum security and decentralization.",
+    description: "Built on Sui blockchain with Walrus storage for maximum security and decentralization.",
   },
   {
     icon: Zap,

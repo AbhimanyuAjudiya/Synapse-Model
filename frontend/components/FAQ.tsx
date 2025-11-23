@@ -7,7 +7,7 @@ const faqs = [
   {
     question: "How does the AI marketplace work?",
     answer:
-      "Our marketplace connects AI model creators with users who need AI capabilities. Models are stored on Walrus, executed on Fluence, and payments are processed on Polygon blockchain for transparency and security.",
+      "Our marketplace connects AI model creators with users who need AI capabilities. Models are stored on Walrus, and metadata is stored on Sui blockchain for transparency and security.",
   },
   {
     question: "What types of AI models are supported?",
@@ -22,7 +22,7 @@ const faqs = [
   {
     question: "Is my data secure?",
     answer:
-      "Yes, we prioritize security. Your data is processed in isolated environments, models are stored on decentralized Walrus storage, and all transactions are secured by Polygon blockchain.",
+      "Yes, we prioritize security. Your data is processed securely, models are stored on decentralized Walrus storage, and all transactions are secured by Sui blockchain.",
   },
   {
     question: "How do I upload my own AI model?",
@@ -32,7 +32,7 @@ const faqs = [
   {
     question: "What wallets are supported?",
     answer:
-      "We support all major Web3 wallets including MetaMask, WalletConnect, and other Ethereum-compatible wallets. Make sure you're connected to the Polygon network.",
+      "We support all major Sui wallets including Sui Wallet, Suiet, and other Sui-compatible wallets. Make sure you're connected to the Sui network.",
   },
 ]
 

@@ -3,14 +3,14 @@ import { motion } from "framer-motion"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { UploadForm } from "@/components/UploadForm"
-import { useWallet } from "@/hooks/useWallet"
+import { useSuiWallet } from "@/hooks/useSuiWallet"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Wallet, Upload as UploadIcon, AlertTriangle } from "lucide-react"
 
 export default function Upload() {
-  const { isConnected, isOnSupportedChain, connectWallet, switchToPolygon } = useWallet()
+  const { isConnected } = useSuiWallet()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -56,33 +56,13 @@ export default function Upload() {
               <CardContent className="space-y-4">
                 <div className="text-center py-8">
                   <div className="text-6xl mb-4">🔗</div>
-                  <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+                  <h3 className="text-xl font-semibold mb-2">Connect Your Sui Wallet</h3>
                   <p className="text-muted-foreground mb-6 text-pretty">
-                    You need to connect your wallet to upload and publish AI models on the blockchain
+                    You need to connect your Sui wallet to upload and publish AI models. Click the Connect button in the navbar.
                   </p>
-                  <Button onClick={connectWallet} size="lg">
-                    <Wallet className="w-4 h-4 mr-2" />
-                    Connect Wallet
-                  </Button>
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
-        ) : !isOnSupportedChain ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <Alert variant="destructive">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription className="flex items-center justify-between">
-                <span>Please switch to Polygon Amoy network to upload models</span>
-                <Button variant="outline" size="sm" onClick={switchToPolygon} className="ml-2 bg-transparent">
-                  Switch Network
-                </Button>
-              </AlertDescription>
-            </Alert>
           </motion.div>
         ) : (
           <motion.div

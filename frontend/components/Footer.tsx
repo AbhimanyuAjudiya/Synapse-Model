@@ -92,7 +92,7 @@ export function Footer() {
 
         <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">© 2025 AI Marketplace. All rights reserved.</p>
-          <p className="text-sm text-muted-foreground mt-2 sm:mt-0">Built on Polygon • Powered by Walrus & Fluence</p>
+          <p className="text-sm text-muted-foreground mt-2 sm:mt-0">Built on Sui • Powered by Walrus</p>
         </div>
       </div>
     </footer>
