@@ -1,0 +1,132 @@
+synapsemodel/
+├── README.md
+├── .gitignore
+├── docker-compose.yml
+│
+├── frontend/                                    # Next.js React frontend
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── next.config.js
+│   ├── .env.example
+│   ├── public/
+│   │   ├── favicon.ico
+│   │   └── assets/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── _app.tsx                        # Next.js app wrapper with providers
+│   │   │   ├── index.tsx                       # Main landing page with job submission
+│   │   │   ├── jobs/
+│   │   │   │   ├── [id].tsx                    # Job detail page showing status/proof
+│   │   │   │   └── index.tsx                   # Job list page
+│   │   │   └── api/
+│   │   │       └── health.ts                   # Health check API route
+│   │   ├── components/
+│   │   │   ├── JobSubmitForm.tsx               # Form to submit ML inference jobs
+│   │   │   ├── JobStatus.tsx                   # Component showing job status badge
+│   │   │   ├── ProofViewer.tsx                 # Displays TEE signature and verification
+│   │   │   ├── TrustCertificate.tsx            # Shows on-chain verified certificate
+│   │   │   └── Layout.tsx                      # Common layout wrapper
+│   │   ├── hooks/
+│   │   │   ├── useSuiWallet.ts                 # Hook for Sui wallet connection
+│   │   │   ├── useJob.ts                       # Hook for fetching job data
+│   │   │   └── useVerification.ts              # Hook for on-chain verification
+│   │   ├── lib/
+│   │   │   ├── api.ts                          # Backend API client functions
+│   │   │   ├── sui.ts                          # Sui blockchain utilities
+│   │   │   └── constants.ts                    # App-wide constants
+│   │   ├── types/
+│   │   │   └── index.ts                        # TypeScript type definitions
+│   │   └── styles/
+│   │       └── globals.css                     # Global styles
+│
+├── backend/                                     # Node.js + TypeScript control plane
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── .env.example
+│   ├── src/
+│   │   ├── index.ts                            # Express server entry point
+│   │   ├── config/
+│   │   │   ├── database.ts                     # PostgreSQL/MongoDB connection config
+│   │   │   ├── redis.ts                        # Redis queue configuration
+│   │   │   └── sui.ts                          # Sui network configuration
+│   │   ├── controllers/
+│   │   │   ├── jobController.ts                # Job submission and retrieval endpoints
+│   │   │   ├── verificationController.ts       # On-chain verification endpoints
+│   │   │   └── healthController.ts             # Health check endpoints
+│   │   ├── services/
+│   │   │   ├── jobService.ts                   # Business logic for job management
+│   │   │   ├── teeService.ts                   # Communication with TEE server
+│   │   │   ├── queueService.ts                 # Job queue management (Bull/BullMQ)
+│   │   │   ├── suiService.ts                   # Sui blockchain interaction service
+│   │   │   └── storageService.ts               # Persistent storage for job data
+│   │   ├── workers/
+│   │   │   └── jobProcessor.ts                 # Background worker processing queued jobs
+│   │   ├── models/
+│   │   │   ├── Job.ts                          # Job data model
+│   │   │   └── Verification.ts                 # Verification record model
+│   │   ├── routes/
+│   │   │   ├── jobs.ts                         # Job-related routes
+│   │   │   ├── verification.ts                 # Verification routes
+│   │   │   └── index.ts                        # Route aggregator
+│   │   ├── middleware/
+│   │   │   ├── auth.ts                         # Authentication middleware
+│   │   │   ├── validation.ts                   # Request validation middleware
+│   │   │   └── errorHandler.ts                 # Global error handling
+│   │   ├── utils/
+│   │   │   ├── logger.ts                       # Winston/Pino logger setup
+│   │   │   ├── errors.ts                       # Custom error classes
+│   │   │   └── helpers.ts                      # Common utility functions
+│   │   └── types/
+│   │       └── index.d.ts                      # TypeScript type definitions
+│   └── tests/
+│       ├── unit/
+│       └── integration/
+│
+├── tee-server/                                  # Rust TEE server using Nautilus
+│   ├── Cargo.toml
+│   ├── Cargo.lock
+│   ├── Makefile                                # Build and deployment targets
+│   ├── .env.example
+│   ├── configs/
+│   │   └── enclave_config.yaml                 # Enclave configuration
+│   ├── src/
+│   │   ├── main.rs                             # Axum server entry point
+│   │   ├── lib.rs                              # Library exports
+│   │   ├── apps/
+│   │   │   └── synapsemodel/
+│   │   │       ├── mod.rs                      # SynapseModel app module
+│   │   │       ├── endpoints.rs                # HTTP endpoint handlers
+│   │   │       ├── inference.rs                # ML inference logic
+│   │   │       └── types.rs                    # Request/response types
+│   │   ├── common/
+│   │   │   ├── mod.rs                          # Common utilities
+│   │   │   ├── attestation.rs                  # Attestation handling
+│   │   │   └── signing.rs                      # Cryptographic signing
+│   │   └── models/
+│   │       ├── mod.rs                          # Model loader/manager
+│   │       └── onnx_runtime.rs                 # ONNX runtime integration
+│   └── tests/
+│       └── integration_tests.rs
+│
+├── contracts/                                   # Sui Move smart contracts
+│   ├── Move.toml                               # Move package manifest
+│   ├── sources/
+│   │   ├── trust_certificate.move              # Main certificate verification module
+│   │   ├── enclave_registry.move               # Enclave registration and management
+│   │   ├── job_record.move                     # On-chain job record storage
+│   │   └── utils.move                          # Helper functions
+│   └── tests/
+│       ├── trust_certificate_tests.move
+│       └── enclave_registry_tests.move
+│
+├── scripts/                                     # Deployment and utility scripts
+│   ├── deploy-contracts.sh                     # Deploy Move contracts to Sui
+│   ├── register-enclave.sh                     # Register enclave on-chain
+│   ├── build-enclave.sh                        # Build TEE enclave image
+│   └── setup-dev.sh                            # Local development setup
+│
+└── docs/                                        # Documentation
+    ├── ARCHITECTURE.md                         # System architecture overview
+    ├── API.md                                  # Backend API documentation
+    ├── DEPLOYMENT.md                           # Deployment guide
+    └── DEVELOPMENT.md                          # Development setup guide

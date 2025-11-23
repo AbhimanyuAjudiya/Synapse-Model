@@ -1,0 +1,68 @@
+# Build directories
+build/
+target/
+dist/
+out/
+.next/
+
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Compiled files
+*.tsbuildinfo
+Cargo.lock
+
+# Deployment outputs
+deploy.json
+deploy.txt
+*.eif
+nitro.pcrs
+
+# Package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Models (large files)
+*.onnx
+*.pb
+*.h5
+*.pth
+*.pt
+
+# Sui specific
+.sui/

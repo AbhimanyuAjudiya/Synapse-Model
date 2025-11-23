@@ -1,0 +1,36 @@
+# Rust
+/target
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# Build outputs
+/out
+/build
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Models (large files)
+*.onnx
+*.pb
+*.h5
+
+# Nitro specific
+*.eif
+nitro.pcrs

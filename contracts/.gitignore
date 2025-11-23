@@ -1,0 +1,31 @@
+# Sui Move build output
+build/
+
+# Move lock file
+Move.lock
+
+# Deployment artifacts
+deploy.json
+deploy.txt
+*.blob
+
+# Saved IDs
+*_ID.txt
+PACKAGE_ID.txt
+JOB_REGISTRY_ID.txt
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

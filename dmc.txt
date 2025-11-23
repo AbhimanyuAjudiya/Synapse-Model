@@ -1,0 +1,65 @@
+touch README.md .gitignore docker-compose.yml
+
+# Create frontend structure
+mkdir -p frontend/{public/assets,src/{pages/{jobs,api},components,hooks,lib,types,styles}}
+cd frontend
+touch package.json tsconfig.json next.config.js .env.example
+touch public/favicon.ico
+touch src/pages/_app.tsx src/pages/index.tsx
+touch src/pages/jobs/\[id\].tsx src/pages/jobs/index.tsx
+touch src/pages/api/health.ts
+touch src/components/{JobSubmitForm.tsx,JobStatus.tsx,ProofViewer.tsx,TrustCertificate.tsx,Layout.tsx}
+touch src/hooks/{useSuiWallet.ts,useJob.ts,useVerification.ts}
+touch src/lib/{api.ts,sui.ts,constants.ts}
+touch src/types/index.ts
+touch src/styles/globals.css
+cd ..
+
+mkdir -p backend/{src/{config,controllers,services,workers,models,routes,middleware,utils,types},tests/{unit,integration}}
+cd backend
+touch package.json tsconfig.json .env.example
+touch src/index.ts
+touch src/config/{database.ts,redis.ts,sui.ts}
+touch src/controllers/{jobController.ts,verificationController.ts,healthController.ts}
+touch src/services/{jobService.ts,teeService.ts,queueService.ts,suiService.ts,storageService.ts}
+touch src/workers/jobProcessor.ts
+touch src/models/{Job.ts,Verification.ts}
+touch src/routes/{jobs.ts,verification.ts,index.ts}
+touch src/middleware/{auth.ts,validation.ts,errorHandler.ts}
+touch src/utils/{logger.ts,errors.ts,helpers.ts}
+touch src/types/index.d.ts
+cd ..
+
+mkdir -p tee-server/{configs,src/{apps/synapsemodel,common,models},tests}
+cd tee-server
+touch Cargo.toml Cargo.lock Makefile .env.example
+touch configs/enclave_config.yaml
+touch src/{main.rs,lib.rs}
+touch src/apps/synapsemodel/{mod.rs,endpoints.rs,inference.rs,types.rs}
+touch src/common/{mod.rs,attestation.rs,signing.rs}
+touch src/models/{mod.rs,onnx_runtime.rs}
+touch tests/integration_tests.rs
+cd ..
+
+
+mkdir -p contracts/{sources,tests}
+cd contracts
+touch Move.toml
+touch sources/{trust_certificate.move,enclave_registry.move,job_record.move,utils.move}
+touch tests/{trust_certificate_tests.move,enclave_registry_tests.move}
+cd ..
+
+
+mkdir scripts
+cd scripts
+touch deploy-contracts.sh register-enclave.sh build-enclave.sh setup-dev.sh
+chmod +x *.sh
+cd ..
+
+
+mkdir docs
+cd docs
+touch ARCHITECTURE.md API.md DEPLOYMENT.md DEVELOPMENT.md
+cd ..
+
+echo "File structure created successfully!"
