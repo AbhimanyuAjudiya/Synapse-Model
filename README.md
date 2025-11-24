@@ -6,12 +6,12 @@
 
 **Upload, Share, and Execute AI Models with Web3 Infrastructure**
 
-[![Sui](https://img.shields.io/badge/Sui-Blockchain-4da2ff?style=for-the-badge&logo=sui)](https://sui.io)
-[![Walrus](https://img.shields.io/badge/Walrus-Storage-00d4aa?style=for-the-badge)](https://walrus.site)
-[![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://react.dev)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Python-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
+<a href="https://sui.io" target="_blank">![Sui](https://img.shields.io/badge/Sui-Blockchain-4da2ff?style=for-the-badge&logo=sui)</a>
+<a href="https://walrus.site" target="_blank">![Walrus](https://img.shields.io/badge/Walrus-Storage-00d4aa?style=for-the-badge)</a>
+<a href="https://react.dev" target="_blank">![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)</a>
+<a href="https://fastapi.tiangolo.com" target="_blank">![FastAPI](https://img.shields.io/badge/FastAPI-Python-009688?style=for-the-badge&logo=fastapi)</a>
 
-[Live Demo](#) • [Documentation](#-documentation) • [Video Demo](https://youtu.be/YVkswhpFN3Q?si=bZxv3DPLqBuc4M-p) • [Testnet Explorer](https://suiscan.xyz/testnet/object/0x0ad1816684996d1e44fce381f0b0f5f9d09223c70c29a0111e8f77cf5cf59bb2)
+[Documentation](#-documentation) • <a href="https://youtu.be/YVkswhpFN3Q?si=bZxv3DPLqBuc4M-p" target="_blank">Video Demo</a> • <a href="https://suiscan.xyz/testnet/object/0x0ad1816684996d1e44fce381f0b0f5f9d09223c70c29a0111e8f77cf5cf59bb2" target="_blank">Testnet Explorer</a>
 
 </div>
 
@@ -461,7 +461,7 @@ Registry ID: 0xce6abe2a425d06478dcf685faf827260ec7888041c63c2f107672007de7bfd0f
 Network:     https://fullnode.testnet.sui.io:443
 ```
 
-[View on Sui Explorer →](https://suiscan.xyz/testnet/object/0x0ad1816684996d1e44fce381f0b0f5f9d09223c70c29a0111e8f77cf5cf59bb2)
+<a href="https://suiscan.xyz/testnet/object/0x0ad1816684996d1e44fce381f0b0f5f9d09223c70c29a0111e8f77cf5cf59bb2" target="_blank">View on Sui Explorer →</a>
 
 **Walrus Testnet**
 ```
@@ -475,7 +475,7 @@ Epochs:      3 (deletable)
 
 ## 🎬 Demo Video
 
-[📺 Watch Demo Video on YouTube →](https://youtu.be/YVkswhpFN3Q?si=bZxv3DPLqBuc4M-p)
+<a href="https://youtu.be/YVkswhpFN3Q?si=bZxv3DPLqBuc4M-p" target="_blank">📺 Watch Demo Video on YouTube →</a>
 
 **Video Contents:**
 1. Upload a sample AI model
@@ -564,6 +564,6 @@ MIT License - see [LICENSE](./LICENSE)
 
 **⭐ Star this repo if you find it useful! ⭐**
 
-[Report Bug](https://github.com/AbhimanyuAjudiya/Synapse-Model/issues) • [Request Feature](https://github.com/AbhimanyuAjudiya/Synapse-Model/issues) • [Ask Question](https://github.com/AbhimanyuAjudiya/Synapse-Model/discussions)
+<a href="https://github.com/AbhimanyuAjudiya/Synapse-Model/issues" target="_blank">Report Bug</a> • <a href="https://github.com/AbhimanyuAjudiya/Synapse-Model/issues" target="_blank">Request Feature</a> • <a href="https://github.com/AbhimanyuAjudiya/Synapse-Model/discussions" target="_blank">Ask Question</a>
 
 </div>
