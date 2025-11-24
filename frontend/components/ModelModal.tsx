@@ -127,7 +127,7 @@ export function ModelModal({ model, isOpen, onClose }: ModelModalProps) {
                   {/* Model Image */}
                   <div className="aspect-video relative overflow-hidden rounded-lg ">
                     <img
-                      src={model.thumbnailUrl || "/placeholder.svg"}
+                      src={model.thumbnailUrl || "/ai-brain-neural-network.jpg"}
                       alt={model.name}
                       className="w-full h-full object-cover "
                     />
@@ -149,7 +149,7 @@ export function ModelModal({ model, isOpen, onClose }: ModelModalProps) {
                   </div>
 
                   {/* Tags */}
-                  <div>
+                  {/* <div>
                     <h3 className="text-lg font-semibold mb-3">Tags</h3>
                     <div className="flex flex-wrap gap-2">
                       {model.tags.map((tag) => (
@@ -158,10 +158,10 @@ export function ModelModal({ model, isOpen, onClose }: ModelModalProps) {
                         </Badge>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Model Info */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-rows-2 gap-4">
                     <div className="flex items-center text-sm text-muted-foreground">
                       <User className="w-4 h-4 mr-2" />
                       <span>Author: {model.author || "Unknown"}</span>
@@ -223,7 +223,7 @@ export function ModelModal({ model, isOpen, onClose }: ModelModalProps) {
                         </div>
                       )}
 
-                      <Button onClick={handleTryNow} className="w-full group" size="lg">
+                      <Button onClick={handleTryNow} className="w-full group border" size="lg">
                         <Play className="w-4 h-4 mr-2" />
                         {model.pricing?.mode === "free" ? "Try Now" : "Pay & Try Now"}
                         <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -252,7 +252,7 @@ export function ModelModal({ model, isOpen, onClose }: ModelModalProps) {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Deployment:</span>
-                        <span className="font-medium">Fluence Runtime</span>
+                        <span className="font-medium">AWS EC2 Runtime</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Storage:</span>

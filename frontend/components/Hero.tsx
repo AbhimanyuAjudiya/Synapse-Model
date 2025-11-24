@@ -71,9 +71,9 @@ export function Hero() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-4xl sm:text-6xl lg:text-7xl font-bold text-balance"
           >
-            Decentralized{" "}
+            Onchain{" "}
             <span className="gradient-text">
-              AI Marketplace
+              AI Hub
             </span>
           </motion.h1>
 
@@ -111,8 +111,8 @@ export function Hero() {
             className="grid grid-cols-3 gap-8 pt-12 max-w-md mx-auto"
           >
             {[
-              { label: "Models", value: "500+" },
-              { label: "Developers", value: "10K+" },
+              { label: "Models", value: "50+" },
+              { label: "Developers", value: "5K+" },
               { label: "Transactions", value: "1M+" },
             ].map((stat, index) => (
               <div key={stat.label} className="text-center">

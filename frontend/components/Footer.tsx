@@ -48,7 +48,7 @@ export function Footer() {
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-chart-1 rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">AI</span>
               </div>
-              <span className="font-bold text-xl">Marketplace</span>
+              <span className="font-bold text-xl">Synapse Model</span>
             </Link>
             <p className="text-muted-foreground text-sm mb-4 text-pretty">
               The decentralized AI marketplace powered by Web3 technology. Deploy, discover, and monetize AI models on

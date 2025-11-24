@@ -89,9 +89,31 @@ export default function Upload() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              <Alert className="mb-4">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>
+                  <strong>Important:</strong> Upload must be a single ZIP file containing:
+                  <ul className="mt-2 ml-4 text-sm space-y-1">
+                    <li>• Python server to expose the model</li>
+                    <li>• Build script for model initialization</li>
+                    <li>• Model files (weights, configs, etc.)</li>
+                  </ul>
+                </AlertDescription>
+              </Alert>
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-semibold mb-2">Supported Formats</h3>
+                  <h3 className="font-semibold mb-2">Required Structure</h3>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• Single ZIP file only</li>
+                    <li>• Python server (Flask/FastAPI)</li>
+                    <li>• Build/initialization script</li>
+                    <li>• Model weights and configs</li>
+                    <li>• requirements.txt for dependencies</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-2">Supported Model Formats</h3>
                   <ul className="text-sm text-muted-foreground space-y-1">
                     <li>• PyTorch (.pt, .pth)</li>
                     <li>• TensorFlow (.pb, .h5)</li>
@@ -100,17 +122,19 @@ export default function Upload() {
                     <li>• Custom formats with scripts</li>
                   </ul>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Best Practices</h3>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• Include clear model description</li>
-                    <li>• Add relevant tags for discovery</li>
-                    <li>• Test your model before upload</li>
-                    <li>• Set fair pricing for usage</li>
-                    <li>• Provide example inputs/outputs</li>
-                  </ul>
-                </div>
               </div>
+              
+              {/* <div className="mt-4">
+                <h3 className="font-semibold mb-2">Best Practices</h3>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Include clear model description</li>
+                  <li>• Add relevant tags for discovery</li>
+                  <li>• Test your model before upload</li>
+                  <li>• Set fair pricing for usage</li>
+                  <li>• Provide example inputs/outputs</li>
+                  <li>• Document API endpoints clearly</li>
+                </ul>
+              </div> */}
             </CardContent>
           </Card>
         </motion.div>

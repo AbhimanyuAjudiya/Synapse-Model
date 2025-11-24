@@ -6,25 +6,26 @@ import { Shield, Zap, Globe, Coins } from "lucide-react"
 const features = [
   {
     icon: Shield,
-    title: "Decentralized & Secure",
-    description: "Built on Sui blockchain with Walrus storage for maximum security and decentralization.",
+    title: "Secure & Scalable",
+    description: "Built on AWS infrastructure with encrypted storage and enterprise-grade security.",
   },
   {
     icon: Zap,
     title: "Instant Deployment",
-    description: "Deploy AI models instantly with Fluence runtime. No infrastructure management required.",
+    description: "Deploy AI models instantly using  EC2 servers and our custom orchestration layer.",
   },
   {
     icon: Globe,
     title: "Global Accessibility",
-    description: "Access AI models from anywhere in the world with low-latency edge computing.",
+    description: "Run and serve models from AWS machines for ultra-low latency worldwide.",
   },
   {
     icon: Coins,
-    title: "Fair Pricing",
-    description: "Pay only for what you use with transparent, blockchain-based pricing and payments.",
+    title: "Efficient Pricing",
+    description: "Pay only for actual compute usage with transparent, usage-based AWS billing.",
   },
 ]
+
 
 export function Features() {
   return (

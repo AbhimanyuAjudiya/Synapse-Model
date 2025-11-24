@@ -43,7 +43,7 @@ export function ModelCard({ model }: ModelCardProps) {
         <CardHeader className="pb-3">
           <div className="aspect-video relative overflow-hidden rounded-lg mb-3">
             <img
-              src={model.thumbnailUrl || "/placeholder.svg"}
+              src={model.thumbnailUrl || "/ai-brain-neural-network.jpg"}
               alt={model.name}
               className="w-full h-full object-cover"
             />

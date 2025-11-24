@@ -283,7 +283,7 @@ export default function Playground() {
                     <Button 
                       onClick={handleCreateInstance}
                       disabled={isCreatingInstance || !model.objectId}
-                      className="ml-4"
+                      className="ml-4 border-2 border-primary/70 hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all duration-150 ease-out transform hover:-translate-y-0.5"
                     >
                       {isCreatingInstance ? (
                         <>

@@ -33,12 +33,12 @@ export function Navbar() {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md"
+                whileHover={{ scale: 1.08, rotate: 6 }}
+                className="w-10 h-10 bg-gradient-to-br from-white-500 via-white-600 to-blue-700 rounded-lg flex items-center justify-center shadow-xl ring-2 ring-sky-400/50 border border-white/20"
               >
-                <span className="text-white font-bold text-sm">AI</span>
+                <img src="/logosmall.png" alt="Synapse Model logo" className="w-9 h-9 object-contain" loading="lazy" />
               </motion.div>
-              <span className="font-bold text-xl text-foreground">Marketplace</span>
+              <span className="font-bold text-xl text-foreground">Synapse Model</span>
             </Link>
 
             {/* Desktop Navigation */}
