@@ -12,6 +12,7 @@ import { useBlockchainModels } from "@/hooks/useBlockchainModels"
 import type { ModelManifest } from "@/types/model"
 
 const INSTANCE_TIMEOUT_MS = 30 * 60 * 1000 // 30 minutes in milliseconds
+const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8000'
 
 export default function Playground() {
   const { id } = useParams<{ id: string }>()
@@ -44,7 +45,7 @@ export default function Playground() {
     setInstanceError(null)
 
     try {
-      const response = await fetch('http://localhost:8000/api/instances', {
+      const response = await fetch(`${BACKEND_API_URL}/api/instances`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ export default function Playground() {
     setInstanceError(null)
 
     try {
-      const response = await fetch(`http://localhost:8000/api/instances/${instanceData.instance_id}`, {
+      const response = await fetch(`${BACKEND_API_URL}/api/instances/${instanceData.instance_id}`, {
         method: 'DELETE',
       })
 
@@ -136,7 +137,7 @@ export default function Playground() {
   useEffect(() => {
     return () => {
       if (instanceData && instanceData.instance_id) {
-        const deleteUrl = `http://localhost:8000/api/instances/${instanceData.instance_id}`
+        const deleteUrl = `${BACKEND_API_URL}/api/instances/${instanceData.instance_id}`
         
         fetch(deleteUrl, {
           method: 'DELETE',
