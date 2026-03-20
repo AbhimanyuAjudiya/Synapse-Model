@@ -114,7 +114,7 @@ export function Hero() {
             {[
               { name: "Sui", domain: "sui.io" },
               { name: "Walrus", domain: "walrus.xyz" },
-              { name: "x402", domain: "coinbase.com" },
+              { name: "x402", domain: "x402.org" },
               { name: "AWS", domain: "aws.amazon.com" },
             ].map(({ name, domain }) => (
               <img
@@ -126,7 +126,6 @@ export function Hero() {
               />
             ))}
           </motion.div>
-
           {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
