@@ -85,6 +85,8 @@ export function Hero() {
             className="text-xl sm:text-2xl text-muted-foreground text-pretty max-w-2xl mx-auto"
           >
             Discover, deploy, and monetize AI models on the blockchain. Powered by Sui and Walrus.
+
+            Bounty.
           </motion.p>
 
           {/* CTA Buttons */}
