@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero"
 import { Navbar } from "@/components/Navbar"
+import { Bounties } from "@/components/Bounties"
 import { ExploreModels } from "@/components/ExploreModels"
 import { Features } from "@/components/Features"
 import { VideoEmbed } from "@/components/VideoEmbed"
@@ -13,6 +14,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <Bounties />
         <ExploreModels />
         <Features />
         <VideoEmbed />
