@@ -103,6 +103,30 @@ export function Hero() {
             </Button>
           </motion.div>
 
+          {/* Powered by logos */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
+            className="flex items-center justify-center gap-5 pt-2"
+          >
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50">Built with</span>
+            {[
+              { name: "Sui", domain: "sui.io" },
+              { name: "Walrus", domain: "walrus.xyz" },
+              { name: "x402", domain: "coinbase.com" },
+              { name: "AWS", domain: "aws.amazon.com" },
+            ].map(({ name, domain }) => (
+              <img
+                key={name}
+                src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
+                alt={name}
+                title={name}
+                className="h-5 w-5 opacity-60 hover:opacity-100 transition-opacity"
+              />
+            ))}
+          </motion.div>
+
           {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -114,7 +138,7 @@ export function Hero() {
               { label: "Models", value: "50+" },
               { label: "Developers", value: "5K+" },
               { label: "Transactions", value: "1M+" },
-            ].map((stat, index) => (
+            ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</div>
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
