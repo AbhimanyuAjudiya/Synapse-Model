@@ -6,7 +6,7 @@ import { Trophy, ExternalLink } from "lucide-react"
 const bounties = [
   {
     award: "$1,500",
-    currency: "ETH",
+    currency: "USDC",
     event: "ETHGlobal New Delhi 2025",
     track: "Fluence Track",
     glow: "shadow-yellow-500/10",
@@ -37,6 +37,17 @@ const bounties = [
     amountColor: "text-violet-400",
     link: null,
   },
+  {
+    award: "$500",
+    currency: "USDC",
+    event: "Polygon",
+    track: "x402 Protocol",
+    glow: "shadow-purple-500/10",
+    border: "border-purple-500/20",
+    dot: "bg-purple-400",
+    amountColor: "text-purple-400",
+    link: null,
+  },
 ]
 
 export function Bounties() {
@@ -59,7 +70,7 @@ export function Bounties() {
         </motion.div>
 
         {/* Cards row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
           {bounties.map((bounty, index) => (
             <motion.div
               key={index}
